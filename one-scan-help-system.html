@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Scan Help System</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1f44;
+    --blue: #1a56db;
+    --sky: #3b82f6;
+    --gold: #f59e0b;
+    --green: #10b981;
+    --red: #ef4444;
+    --light: #f0f6ff;
+    --white: #ffffff;
+    --gray: #64748b;
+    --border: #dbeafe;
+    --card-bg: #ffffff;
+    --shadow: 0 4px 24px rgba(10,31,68,0.10);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans', sans-serif;
+    background: var(--light);
+    color: var(--navy);
+    min-height: 100vh;
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a3a70 100%);
+    color: white;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 16px rgba(10,31,68,0.3);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--gold);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--navy);
+    font-family: 'Baloo 2', cursive;
+    flex-shrink: 0;
+  }
+
+  .logo-text h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.25rem;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+  }
+
+  .logo-text p {
+    font-size: 0.65rem;
+    opacity: 0.75;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .header-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-btn {
+    background: none;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 7px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-family: 'Noto Sans', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .nav-btn:hover, .nav-btn.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--navy);
+    font-weight: 600;
+  }
+
+  .nav-btn.admin-btn {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--navy);
+    font-weight: 700;
+  }
+
+  .nav-btn.admin-btn:hover {
+    background: #d97706;
+    border-color: #d97706;
+  }
+
+  /* ===== PAGES ===== */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1e3a6e 60%, #1a56db 100%);
+    color: white;
+    padding: 3.5rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 280px; height: 280px;
+    background: rgba(245,158,11,0.10);
+    border-radius: 50%;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -40px;
+    width: 220px; height: 220px;
+    background: rgba(59,130,246,0.12);
+    border-radius: 50%;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 16px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+
+  .hero h2 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2.4rem;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero p {
+    font-size: 1.05rem;
+    opacity: 0.85;
+    max-width: 560px;
+    margin: 0 auto 1.8rem;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    margin-top: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 2px;
+  }
+
+  /* ===== SEARCH BAR ===== */
+  .search-wrap {
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .search-bar {
+    display: flex;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  }
+
+  .search-bar input {
+    flex: 1;
+    border: none;
+    padding: 14px 20px;
+    font-size: 1rem;
+    font-family: 'Noto Sans', sans-serif;
+    color: var(--navy);
+    outline: none;
+  }
+
+  .search-bar button {
+    background: var(--blue);
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-family: 'Baloo 2', cursive;
+    font-weight: 700;
+    transition: background 0.2s;
+  }
+
+  .search-bar button:hover { background: var(--navy); }
+
+  /* ===== CATEGORY TABS ===== */
+  .cat-tabs {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 1.5rem 2rem 0;
+    scrollbar-width: none;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .cat-tabs::-webkit-scrollbar { display: none; }
+
+  .cat-tab {
+    flex-shrink: 0;
+    background: white;
+    border: 2px solid var(--border);
+    color: var(--gray);
+    padding: 8px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.88rem;
+    font-weight: 600;
+    font-family: 'Noto Sans', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .cat-tab:hover { border-color: var(--sky); color: var(--sky); }
+
+  .cat-tab.active {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: white;
+    box-shadow: 0 3px 12px rgba(26,86,219,0.25);
+  }
+
+  /* ===== MAIN GRID ===== */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem 2rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ===== FORM CARD ===== */
+  .form-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1.5px solid var(--border);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+
+  .form-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(26,86,219,0.13);
+  }
+
+  .form-card-header {
+    padding: 1.2rem 1.4rem 0.8rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .form-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .form-icon.gov { background: #eff6ff; }
+  .form-icon.bank { background: #f0fdf4; }
+  .form-icon.health { background: #fff7ed; }
+  .form-icon.id { background: #fdf4ff; }
+
+  .form-meta { flex: 1; }
+
+  .form-meta h3 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+
+  .form-meta p {
+    font-size: 0.8rem;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+
+  .form-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    flex-shrink: 0;
+  }
+
+  .badge-gov { background: #dbeafe; color: #1d4ed8; }
+  .badge-bank { background: #d1fae5; color: #065f46; }
+  .badge-health { background: #fef3c7; color: #92400e; }
+  .badge-id { background: #f3e8ff; color: #6b21a8; }
+
+  .form-detail-box {
+    background: var(--light);
+    margin: 0 1.2rem 1.2rem;
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    border-left: 4px solid var(--blue);
+  }
+
+  .form-detail-box h4 {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 6px;
+  }
+
+  .form-detail-box p {
+    font-size: 0.82rem;
+    color: #374151;
+    line-height: 1.55;
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 8px;
+    padding: 0 1.2rem 1.2rem;
+    flex-wrap: wrap;
+  }
+
+  .action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    font-family: 'Noto Sans', sans-serif;
+    transition: all 0.18s;
+  }
+
+  .btn-primary { background: var(--blue); color: white; }
+  .btn-primary:hover { background: var(--navy); }
+  .btn-outline { background: white; color: var(--blue); border: 1.5px solid var(--blue); }
+  .btn-outline:hover { background: #eff6ff; }
+  .btn-red { background: #fee2e2; color: #dc2626; border: none; }
+  .btn-red:hover { background: #fecaca; }
+  .btn-yellow { background: #fef3c7; color: #92400e; border: none; }
+  .btn-green { background: #d1fae5; color: #065f46; border: none; }
+
+  /* ===== VIDEO SECTION ===== */
+  .section-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--navy);
+    padding: 2rem 2rem 0.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title::before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 26px;
+    background: var(--gold);
+    border-radius: 3px;
+  }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.2rem;
+    padding: 0.5rem 2rem 2.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .video-card {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1.5px solid var(--border);
+    transition: transform 0.2s;
+  }
+
+  .video-card:hover { transform: translateY(-3px); }
+
+  .video-thumb {
+    position: relative;
+    height: 155px;
+    background: linear-gradient(135deg, #1e3a6e, #1a56db);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .video-thumb iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    position: absolute;
+    top: 0; left: 0;
+  }
+
+  .video-placeholder {
+    font-size: 3.5rem;
+    opacity: 0.4;
+  }
+
+  .yt-overlay {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: #FF0000;
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .video-info {
+    padding: 0.9rem 1rem;
+  }
+
+  .video-info h4 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+    line-height: 1.25;
+  }
+
+  .video-info p {
+    font-size: 0.78rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+
+  .watch-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #FF0000;
+    color: white;
+    padding: 7px 14px;
+    border-radius: 7px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    font-family: 'Noto Sans', sans-serif;
+    transition: background 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .watch-btn:hover { background: #cc0000; }
+
+  /* ===== NO RESULTS ===== */
+  .no-results {
+    text-align: center;
+    padding: 3rem;
+    color: var(--gray);
+    font-size: 1rem;
+  }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,31,68,0.55);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: white;
+    border-radius: 18px;
+    width: 100%;
+    max-width: 540px;
+    max-height: 88vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(10,31,68,0.25);
+    animation: slideUp 0.25s ease;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .modal-header {
+    padding: 1.4rem 1.6rem;
+    border-bottom: 1.5px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-header h3 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--navy);
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: var(--gray);
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background 0.2s;
+  }
+
+  .modal-close:hover { background: #f1f5f9; color: var(--navy); }
+
+  .modal-body { padding: 1.4rem 1.6rem; }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 5px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 9px;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    font-family: 'Noto Sans', sans-serif;
+    color: var(--navy);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--sky);
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
+  }
+
+  .form-group textarea { resize: vertical; min-height: 80px; }
+
+  .modal-footer {
+    padding: 1rem 1.6rem 1.4rem;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+
+  /* ===== ADMIN PANEL ===== */
+  #adminPage .admin-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .admin-header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .admin-header-bar h2 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--navy);
+  }
+
+  .admin-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 0;
+  }
+
+  .admin-tab {
+    padding: 9px 20px;
+    border-radius: 8px 8px 0 0;
+    border: none;
+    background: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--gray);
+    font-family: 'Noto Sans', sans-serif;
+    transition: all 0.2s;
+    margin-bottom: -2px;
+    border-bottom: 2px solid transparent;
+  }
+
+  .admin-tab.active {
+    color: var(--blue);
+    border-bottom-color: var(--blue);
+    background: #eff6ff;
+  }
+
+  .admin-content { display: none; }
+  .admin-content.active { display: block; }
+
+  .admin-card {
+    background: white;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    border: 1.5px solid var(--border);
+    overflow: hidden;
+    margin-bottom: 1.2rem;
+  }
+
+  .admin-card-header {
+    padding: 1rem 1.4rem;
+    background: #f8faff;
+    border-bottom: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .admin-card-header h4 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--navy);
+  }
+
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+  }
+
+  .admin-table th {
+    background: #f1f5f9;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 700;
+    color: var(--gray);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .admin-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #f1f5f9;
+    color: var(--navy);
+    vertical-align: middle;
+  }
+
+  .admin-table tr:last-child td { border-bottom: none; }
+  .admin-table tr:hover td { background: #f8faff; }
+
+  .status-pill {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+  }
+
+  .status-active { background: #d1fae5; color: #065f46; }
+  .status-draft { background: #fef3c7; color: #92400e; }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.2rem 1.4rem;
+    box-shadow: var(--shadow);
+    border: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .stat-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .stat-card-icon.blue { background: #dbeafe; }
+  .stat-card-icon.green { background: #d1fae5; }
+  .stat-card-icon.gold { background: #fef3c7; }
+  .stat-card-icon.purple { background: #f3e8ff; }
+
+  .stat-card-val {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1;
+  }
+
+  .stat-card-label {
+    font-size: 0.75rem;
+    color: var(--gray);
+    margin-top: 2px;
+    font-weight: 600;
+  }
+
+  /* ===== LOGIN SCREEN ===== */
+  .login-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,31,68,0.7);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .login-overlay.open { display: flex; }
+
+  .login-box {
+    background: white;
+    border-radius: 18px;
+    padding: 2.5rem 2rem;
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(10,31,68,0.3);
+    animation: slideUp 0.25s ease;
+  }
+
+  .login-box .login-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+
+  .login-box h3 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 5px;
+  }
+
+  .login-box p {
+    font-size: 0.82rem;
+    color: var(--gray);
+    margin-bottom: 1.5rem;
+  }
+
+  .login-error {
+    color: var(--red);
+    font-size: 0.8rem;
+    margin-bottom: 0.8rem;
+    display: none;
+  }
+
+  /* ===== TOAST ===== */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--navy);
+    color: white;
+    padding: 13px 22px;
+    border-radius: 12px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    box-shadow: 0 8px 24px rgba(10,31,68,0.25);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    gap: 10px;
+    animation: slideUp 0.25s ease;
+    max-width: 340px;
+  }
+
+  .toast.show { display: flex; }
+  .toast.success { background: var(--green); }
+  .toast.error { background: var(--red); }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.65);
+    text-align: center;
+    padding: 1.5rem 2rem;
+    font-size: 0.8rem;
+    margin-top: 2rem;
+  }
+
+  .footer span { color: var(--gold); font-weight: 700; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (min-width: 680px) {
+    .main-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 960px) {
+    .main-grid { grid-template-columns: 1fr 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .hero h2 { font-size: 1.7rem; }
+    .hero-stats { gap: 1.5rem; }
+    .admin-wrapper { padding: 1rem; }
+    .header { padding: 0 1rem; }
+    .logo-text p { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+    <div class="logo-icon">1S</div>
+    <div class="logo-text">
+      <h1>One Scan Help System</h1>
+      <p>Government &amp; Bank Forms Portal</p>
+    </div>
+  </div>
+  <div class="header-nav">
+    <button class="nav-btn active" onclick="showPage('home')">🏠 Home</button>
+    <button class="nav-btn" onclick="showPage('videos')">▶ Videos</button>
+    <button class="nav-btn admin-btn" onclick="openAdminLogin()">🔐 Admin</button>
+  </div>
+</header>
+
+<!-- ===== HOME PAGE ===== -->
+<div id="homePage" class="page active">
+  <div class="hero">
+    <div class="hero-badge">🇮🇳 Official Forms &amp; Guides</div>
+    <h2>Find Any Government or<br>Bank Form — Instantly</h2>
+    <p>Search, understand, and download government and bank forms in simple language. Watch video guides for step-by-step help.</p>
+    <div class="search-wrap">
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search forms, e.g. Aadhaar, PAN Card, Bank Account…" oninput="filterForms()">
+        <button onclick="filterForms()">🔍 Search</button>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num" id="statForms">0</div>
+        <div class="stat-label">Forms Listed</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="statVideos">0</div>
+        <div class="stat-label">Video Guides</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">Free</div>
+        <div class="stat-label">Always Free</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-tabs" id="catTabs">
+    <button class="cat-tab active" onclick="filterCategory('all', this)">🗂 All Forms</button>
+    <button class="cat-tab" onclick="filterCategory('gov', this)">🏛 Government</button>
+    <button class="cat-tab" onclick="filterCategory('bank', this)">🏦 Bank</button>
+    <button class="cat-tab" onclick="filterCategory('health', this)">🏥 Health</button>
+    <button class="cat-tab" onclick="filterCategory('id', this)">🪪 Identity</button>
+  </div>
+
+  <div class="main-grid" id="formsGrid"></div>
+</div>
+
+<!-- ===== VIDEOS PAGE ===== -->
+<div id="videosPage" class="page">
+  <div class="section-title">▶ Video Guides</div>
+  <div class="video-grid" id="videoGrid"></div>
+</div>
+
+<!-- ===== ADMIN PAGE ===== -->
+<div id="adminPage" class="page">
+  <div class="admin-wrapper">
+    <div class="admin-header-bar">
+      <h2>⚙️ Admin Panel</h2>
+      <button class="action-btn btn-red" onclick="adminLogout()">🚪 Logout</button>
+    </div>
+
+    <div class="stats-grid" id="adminStats"></div>
+
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchAdminTab('forms', this)">📋 Forms</button>
+      <button class="admin-tab" onclick="switchAdminTab('videos', this)">🎬 Videos</button>
+    </div>
+
+    <div id="adminForms" class="admin-content active">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h4>All Forms</h4>
+          <button class="action-btn btn-primary" onclick="openAddForm()">➕ Add Form</button>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="admin-table" id="adminFormsTable">
+            <thead>
+              <tr>
+                <th>Form Name</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminFormsTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="adminVideos" class="admin-content">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h4>Video Guides</h4>
+          <button class="action-btn btn-primary" onclick="openAddVideo()">➕ Add Video</button>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="admin-table" id="adminVideosTable">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>YouTube URL</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminVideosTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© 2025 <span>One Scan Help System</span> — Making Government &amp; Bank Forms Easy for Everyone</p>
+</footer>
+
+<!-- ===== LOGIN OVERLAY ===== -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-box">
+    <div class="login-icon">🔐</div>
+    <h3>Admin Login</h3>
+    <p>Enter your credentials to manage content</p>
+    <div class="login-error" id="loginError">❌ Invalid username or password.</div>
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" id="loginUser" placeholder="admin" />
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="••••••" onkeydown="if(event.key==='Enter') doLogin()" />
+    </div>
+    <div style="display:flex;gap:10px;margin-top:6px;">
+      <button class="action-btn btn-primary" style="flex:1;justify-content:center;" onclick="doLogin()">Login</button>
+      <button class="action-btn btn-outline" style="flex:1;justify-content:center;" onclick="closeLogin()">Cancel</button>
+    </div>
+    <p style="margin-top:1rem;font-size:0.72rem;color:#94a3b8;">Default: admin / admin123</p>
+  </div>
+</div>
+
+<!-- ===== ADD/EDIT FORM MODAL ===== -->
+<div class="modal-overlay" id="formModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="formModalTitle">Add New Form</h3>
+      <button class="modal-close" onclick="closeModal('formModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editFormId">
+      <div class="form-group">
+        <label>Form Name *</label>
+        <input type="text" id="fName" placeholder="e.g. PAN Card Application Form 49A" />
+      </div>
+      <div class="form-group">
+        <label>Category *</label>
+        <select id="fCategory">
+          <option value="gov">🏛 Government</option>
+          <option value="bank">🏦 Bank</option>
+          <option value="health">🏥 Health</option>
+          <option value="id">🪪 Identity</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Short Description *</label>
+        <input type="text" id="fDesc" placeholder="One line description of the form" />
+      </div>
+      <div class="form-group">
+        <label>Detailed Explanation (shown on card)</label>
+        <textarea id="fDetail" placeholder="Explain what this form is for, who needs it, and what documents are required..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Form Download / Official Link</label>
+        <input type="url" id="fLink" placeholder="https://..." />
+      </div>
+      <div class="form-group">
+        <label>Related YouTube Video Link</label>
+        <input type="url" id="fVideo" placeholder="https://youtube.com/watch?v=..." />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="action-btn btn-outline" onclick="closeModal('formModal')">Cancel</button>
+      <button class="action-btn btn-primary" onclick="saveForm()">💾 Save Form</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ADD/EDIT VIDEO MODAL ===== -->
+<div class="modal-overlay" id="videoModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="videoModalTitle">Add Video Guide</h3>
+      <button class="modal-close" onclick="closeModal('videoModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editVideoId">
+      <div class="form-group">
+        <label>Video Title *</label>
+        <input type="text" id="vTitle" placeholder="e.g. How to Apply for Aadhaar Card" />
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="vDesc" placeholder="Brief description of what this video covers..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>YouTube Video URL *</label>
+        <input type="url" id="vUrl" placeholder="https://www.youtube.com/watch?v=..." />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="action-btn btn-outline" onclick="closeModal('videoModal')">Cancel</button>
+      <button class="action-btn btn-primary" onclick="saveVideo()">💾 Save Video</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== DATA STORE =====
+let forms = [
+  { id: 1, name: "PAN Card Application (Form 49A)", category: "id", desc: "Apply for a new PAN card for Indian citizens", detail: "Form 49A is used by Indian citizens to apply for a Permanent Account Number (PAN). Required for filing income tax returns, opening bank accounts, and financial transactions above ₹50,000. Documents needed: Aadhaar card, passport-size photo, address proof.", link: "https://www.incometax.gov.in/iec/foportal/", video: "https://www.youtube.com/watch?v=ZXJcEI7L_mc" },
+  { id: 2, name: "Aadhaar Card Enrollment Form", category: "id", desc: "Enroll for a new Aadhaar number at your nearest center", detail: "The Aadhaar Enrollment Form is used to register for a 12-digit Unique Identification Number issued by UIDAI. Visit any Aadhaar Enrollment Center with proof of identity (passport, voter ID) and proof of address. Biometric data (fingerprints, iris scan) is also collected.", link: "https://uidai.gov.in/", video: "https://www.youtube.com/watch?v=lhJWLl0R2BU" },
+  { id: 3, name: "Voter ID Registration (Form 6)", category: "gov", desc: "Register as a voter or get your voter ID card", detail: "Form 6 is used for new voter registration in the Electoral Roll. Eligible for Indian citizens who have turned 18 years. Documents needed: Age proof (birth certificate or class 10 marksheet), address proof (Aadhaar card, utility bill), and a passport-size photo.", link: "https://voters.eci.gov.in/", video: "https://www.youtube.com/watch?v=WtPDMhm9sBc" },
+  { id: 4, name: "Bank Account Opening Form (SBI)", category: "bank", desc: "Open a savings or current account with State Bank of India", detail: "To open a savings account at SBI, fill the Account Opening Form available at any SBI branch. Required documents: KYC documents (Aadhaar + PAN), 2 passport-size photos, initial deposit. You can also open an account online via the YONO SBI app.", link: "https://sbi.co.in/", video: "https://www.youtube.com/watch?v=ZXJcEI7L_mc" },
+  { id: 5, name: "Passport Application (Form SP-1)", category: "gov", desc: "Apply for a fresh or reissue of Indian passport", detail: "Form SP-1 is used to apply for a fresh passport or re-issue an existing one. Apply online at Passport Seva Portal. Documents required: Aadhaar card, PAN card, address proof, birth certificate, 2 passport-size photos (white background). Appointment is mandatory.", link: "https://passportindia.gov.in/", video: "https://www.youtube.com/watch?v=KjCJf3Y7H3A" },
+  { id: 6, name: "PM Kisan Samman Nidhi Form", category: "gov", desc: "Register for ₹6,000 per year direct benefit for farmers", detail: "The PM-KISAN scheme provides ₹6,000 per year to small and marginal farmers in three equal installments. Farmers must register via the PM-KISAN portal or Common Service Centre (CSC). Required: Aadhaar card, land records, bank account linked with Aadhaar.", link: "https://pmkisan.gov.in/", video: "https://www.youtube.com/watch?v=mU8K2mJWVsg" },
+  { id: 7, name: "Ayushman Bharat Health Card", category: "health", desc: "Get free health insurance cover up to ₹5 lakh per year", detail: "Under the Pradhan Mantri Jan Arogya Yojana (PM-JAY), eligible families get health insurance of up to ₹5 lakh per year for secondary and tertiary hospitalization. Eligibility is based on SECC 2011 database. Apply at Ayushman Bharat centers or online with Aadhaar.", link: "https://pmjay.gov.in/", video: "" },
+  { id: 8, name: "Jan Dhan Yojana Account Form", category: "bank", desc: "Open a zero-balance account under PMJDY scheme", detail: "Under Pradhan Mantri Jan Dhan Yojana, eligible individuals can open a zero-balance savings account at any bank. Benefits include: RuPay debit card, accidental insurance of ₹2 lakh, overdraft facility up to ₹10,000. Documents: Aadhaar card or any valid KYC document.", link: "https://pmjdy.gov.in/", video: "https://www.youtube.com/watch?v=mU8K2mJWVsg" }
+];
+
+let videos = [
+  { id: 1, title: "How to Apply for PAN Card Online", desc: "Step-by-step guide to applying for a new PAN card through the official Income Tax portal.", url: "https://www.youtube.com/watch?v=ZXJcEI7L_mc" },
+  { id: 2, title: "Aadhaar Card Enrollment Process", desc: "Complete guide for visiting an Aadhaar Enrollment Center and getting your Aadhaar card.", url: "https://www.youtube.com/watch?v=lhJWLl0R2BU" },
+  { id: 3, title: "How to Register as a Voter (Form 6)", desc: "Learn how to fill Form 6 and register yourself as a voter on the NVSP portal.", url: "https://www.youtube.com/watch?v=WtPDMhm9sBc" },
+  { id: 4, title: "Applying for Indian Passport Online", desc: "Full walkthrough of the Passport Seva Portal and how to book an appointment.", url: "https://www.youtube.com/watch?v=KjCJf3Y7H3A" }
+];
+
+let nextFormId = 9;
+let nextVideoId = 5;
+let currentCategory = 'all';
+let adminLoggedIn = false;
+
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = 'admin123';
+
+// ===== PAGE NAVIGATION =====
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(page + 'Page').classList.add('active');
+  if (page === 'videos') renderVideos();
+  if (page === 'admin') { if (!adminLoggedIn) { openAdminLogin(); return; } renderAdmin(); }
+  // highlight nav
+  const btns = document.querySelectorAll('.nav-btn');
+  if (page === 'home') btns[0].classList.add('active');
+  if (page === 'videos') btns[1].classList.add('active');
+}
+
+// ===== CATEGORY & SEARCH =====
+function filterCategory(cat, el) {
+  currentCategory = cat;
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderForms();
+}
+
+function filterForms() { renderForms(); }
+
+function getFilteredForms() {
+  const q = (document.getElementById('searchInput').value || '').toLowerCase();
+  return forms.filter(f => {
+    const matchCat = currentCategory === 'all' || f.category === currentCategory;
+    const matchSearch = !q || f.name.toLowerCase().includes(q) || f.desc.toLowerCase().includes(q) || f.detail.toLowerCase().includes(q);
+    return matchCat && matchSearch;
+  });
+}
+
+// ===== RENDER FORMS =====
+const catIcons = { gov: '🏛', bank: '🏦', health: '🏥', id: '🪪' };
+const catLabels = { gov: 'Government', bank: 'Bank', health: 'Health', id: 'Identity' };
+const catBadge = { gov: 'badge-gov', bank: 'badge-bank', health: 'badge-health', id: 'badge-id' };
+
+function renderForms() {
+  const grid = document.getElementById('formsGrid');
+  const filtered = getFilteredForms();
+  document.getElementById('statForms').textContent = forms.length;
+  document.getElementById('statVideos').textContent = videos.length;
+
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="no-results" style="grid-column:1/-1;">😕 No forms found. Try a different search or category.</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(f => `
+    <div class="form-card">
+      <div class="form-card-header">
+        <div class="form-icon ${f.category}">${catIcons[f.category]}</div>
+        <div class="form-meta">
+          <h3>${f.name}</h3>
+          <p>${f.desc}</p>
+        </div>
+        <span class="form-badge ${catBadge[f.category]}">${catLabels[f.category]}</span>
+      </div>
+      <div class="form-detail-box">
+        <h4>📖 What is this form?</h4>
+        <p>${f.detail}</p>
+      </div>
+      <div class="form-actions">
+        ${f.link ? `<a class="action-btn btn-primary" href="${f.link}" target="_blank">📥 Get Form</a>` : ''}
+        ${f.video ? `<button class="action-btn btn-outline" onclick="openYoutube('${f.video}')">▶ Watch Guide</button>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function openYoutube(url) {
+  window.open(url, '_blank');
+}
+
+// ===== RENDER VIDEOS =====
+function getYouTubeId(url) {
+  if (!url) return null;
+  const match = url.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
+  return match ? match[1] : null;
+}
+
+function renderVideos() {
+  const grid = document.getElementById('videoGrid');
+  if (!videos.length) {
+    grid.innerHTML = '<div class="no-results" style="grid-column:1/-1;">No videos added yet. Ask admin to add video guides.</div>';
+    return;
+  }
+  grid.innerHTML = videos.map(v => {
+    const vid = getYouTubeId(v.url);
+    const thumb = vid ? `https://img.youtube.com/vi/${vid}/mqdefault.jpg` : '';
+    return `
+      <div class="video-card">
+        <div class="video-thumb" style="${thumb ? `background:url('${thumb}') center/cover` : ''}">
+          ${!thumb ? `<div class="video-placeholder">🎬</div>` : ''}
+          <div class="yt-overlay">▶ YouTube</div>
+        </div>
+        <div class="video-info">
+          <h4>${v.title}</h4>
+          <p>${v.desc}</p>
+          ${v.url ? `<button class="watch-btn" onclick="window.open('${v.url}','_blank')">▶ Watch on YouTube</button>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ===== ADMIN LOGIN =====
+function openAdminLogin() {
+  document.getElementById('loginOverlay').classList.add('open');
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+  document.getElementById('loginError').style.display = 'none';
+}
+
+function closeLogin() {
+  document.getElementById('loginOverlay').classList.remove('open');
+}
+
+function doLogin() {
+  const u = document.getElementById('loginUser').value.trim();
+  const p = document.getElementById('loginPass').value.trim();
+  if (u === ADMIN_USER && p === ADMIN_PASS) {
+    adminLoggedIn = true;
+    closeLogin();
+    showPage('admin');
+    showToast('✅ Welcome to Admin Panel!', 'success');
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+
+function adminLogout() {
+  adminLoggedIn = false;
+  showPage('home');
+  showToast('👋 Logged out successfully.', 'success');
+}
+
+// ===== ADMIN RENDER =====
+function renderAdmin() {
+  // Stats
+  document.getElementById('adminStats').innerHTML = `
+    <div class="stat-card"><div class="stat-card-icon blue">📋</div><div><div class="stat-card-val">${forms.length}</div><div class="stat-card-label">Total Forms</div></div></div>
+    <div class="stat-card"><div class="stat-card-icon green">🎬</div><div><div class="stat-card-val">${videos.length}</div><div class="stat-card-label">Video Guides</div></div></div>
+    <div class="stat-card"><div class="stat-card-icon gold">🏛</div><div><div class="stat-card-val">${forms.filter(f=>f.category==='gov').length}</div><div class="stat-card-label">Gov Forms</div></div></div>
+    <div class="stat-card"><div class="stat-card-icon purple">🏦</div><div><div class="stat-card-val">${forms.filter(f=>f.category==='bank').length}</div><div class="stat-card-label">Bank Forms</div></div></div>
+  `;
+
+  // Forms Table
+  document.getElementById('adminFormsTbody').innerHTML = forms.map(f => `
+    <tr>
+      <td><strong>${f.name}</strong></td>
+      <td><span class="form-badge ${catBadge[f.category]}">${catIcons[f.category]} ${catLabels[f.category]}</span></td>
+      <td><span class="status-pill status-active">Active</span></td>
+      <td>
+        <button class="action-btn btn-yellow" onclick="openEditForm(${f.id})" style="margin-right:4px;">✏️ Edit</button>
+        <button class="action-btn btn-red" onclick="deleteForm(${f.id})">🗑 Delete</button>
+      </td>
+    </tr>
+  `).join('');
+
+  // Videos Table
+  document.getElementById('adminVideosTbody').innerHTML = videos.map(v => `
+    <tr>
+      <td><strong>${v.title}</strong></td>
+      <td>${v.desc.substring(0, 55)}…</td>
+      <td><a href="${v.url}" target="_blank" style="color:var(--blue);font-size:0.8rem;">🔗 Link</a></td>
+      <td>
+        <button class="action-btn btn-yellow" onclick="openEditVideo(${v.id})" style="margin-right:4px;">✏️ Edit</button>
+        <button class="action-btn btn-red" onclick="deleteVideo(${v.id})">🗑 Delete</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function switchAdminTab(tab, el) {
+  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.admin-content').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('admin' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+}
+
+// ===== FORM MODAL =====
+function openAddForm() {
+  document.getElementById('formModalTitle').textContent = 'Add New Form';
+  document.getElementById('editFormId').value = '';
+  ['fName','fDesc','fDetail','fLink','fVideo'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('fCategory').value = 'gov';
+  document.getElementById('formModal').classList.add('open');
+}
+
+function openEditForm(id) {
+  const f = forms.find(x => x.id === id);
+  if (!f) return;
+  document.getElementById('formModalTitle').textContent = 'Edit Form';
+  document.getElementById('editFormId').value = id;
+  document.getElementById('fName').value = f.name;
+  document.getElementById('fCategory').value = f.category;
+  document.getElementById('fDesc').value = f.desc;
+  document.getElementById('fDetail').value = f.detail;
+  document.getElementById('fLink').value = f.link || '';
+  document.getElementById('fVideo').value = f.video || '';
+  document.getElementById('formModal').classList.add('open');
+}
+
+function saveForm() {
+  const name = document.getElementById('fName').value.trim();
+  const category = document.getElementById('fCategory').value;
+  const desc = document.getElementById('fDesc').value.trim();
+  const detail = document.getElementById('fDetail').value.trim();
+  const link = document.getElementById('fLink').value.trim();
+  const video = document.getElementById('fVideo').value.trim();
+  if (!name || !desc) { showToast('❌ Name and description are required.', 'error'); return; }
+
+  const editId = parseInt(document.getElementById('editFormId').value);
+  if (editId) {
+    const i = forms.findIndex(f => f.id === editId);
+    forms[i] = { id: editId, name, category, desc, detail, link, video };
+    showToast('✅ Form updated successfully!', 'success');
+  } else {
+    forms.push({ id: nextFormId++, name, category, desc, detail, link, video });
+    showToast('✅ Form added successfully!', 'success');
+  }
+  closeModal('formModal');
+  renderAdmin();
+  renderForms();
+}
+
+function deleteForm(id) {
+  if (!confirm('Delete this form?')) return;
+  forms = forms.filter(f => f.id !== id);
+  renderAdmin();
+  renderForms();
+  showToast('🗑 Form deleted.', 'success');
+}
+
+// ===== VIDEO MODAL =====
+function openAddVideo() {
+  document.getElementById('videoModalTitle').textContent = 'Add Video Guide';
+  document.getElementById('editVideoId').value = '';
+  ['vTitle','vDesc','vUrl'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('videoModal').classList.add('open');
+}
+
+function openEditVideo(id) {
+  const v = videos.find(x => x.id === id);
+  if (!v) return;
+  document.getElementById('videoModalTitle').textContent = 'Edit Video';
+  document.getElementById('editVideoId').value = id;
+  document.getElementById('vTitle').value = v.title;
+  document.getElementById('vDesc').value = v.desc;
+  document.getElementById('vUrl').value = v.url;
+  document.getElementById('videoModal').classList.add('open');
+}
+
+function saveVideo() {
+  const title = document.getElementById('vTitle').value.trim();
+  const desc = document.getElementById('vDesc').value.trim();
+  const url = document.getElementById('vUrl').value.trim();
+  if (!title || !url) { showToast('❌ Title and URL are required.', 'error'); return; }
+
+  const editId = parseInt(document.getElementById('editVideoId').value);
+  if (editId) {
+    const i = videos.findIndex(v => v.id === editId);
+    videos[i] = { id: editId, title, desc, url };
+    showToast('✅ Video updated!', 'success');
+  } else {
+    videos.push({ id: nextVideoId++, title, desc, url });
+    showToast('✅ Video added!', 'success');
+  }
+  closeModal('videoModal');
+  renderAdmin();
+  renderVideos();
+}
+
+function deleteVideo(id) {
+  if (!confirm('Delete this video?')) return;
+  videos = videos.filter(v => v.id !== id);
+  renderAdmin();
+  renderVideos();
+  showToast('🗑 Video deleted.', 'success');
+}
+
+// ===== MODAL CLOSE =====
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// Close modal on overlay click
+document.querySelectorAll('.modal-overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
+});
+
+// ===== TOAST =====
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ===== INIT =====
+renderForms();
+</script>
+</body>
+</html>

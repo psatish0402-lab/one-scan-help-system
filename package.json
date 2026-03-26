@@ -1,0 +1,17 @@
+{
+  "name": "one-scan-help-system",
+  "version": "1.0.0",
+  "description": "One Scan Help System — Government & Bank Forms Portal",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "sql.js": "^1.11.0",
+    "cors": "^2.8.5",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
