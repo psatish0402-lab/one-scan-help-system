@@ -218,6 +218,9 @@ app.get('/api/stats', authMiddleware, (req, res) => {
   });
 });
 
+// ===== ROUTES =====
+app.get('/admin', (req, res) => { res.sendFile(path.join(__dirname, 'public', 'admin.html')); });
+
 // ===== CATCH-ALL =====
 app.get('*', (req, res) => { res.sendFile(path.join(__dirname, 'public', 'index.html')); });
 

@@ -22,7 +22,7 @@
   <div class="header-nav">
     <button class="nav-btn active" onclick="showPage('home')">🏠 Home</button>
     <button class="nav-btn" onclick="showPage('videos')">▶ Videos</button>
-    <button class="nav-btn admin-btn" onclick="openAdminLogin()">🔐 Admin</button>
+    <a href="/admin" class="nav-btn admin-btn" style="text-decoration:none;">🔐 Admin</a>
   </div>
 </header>
 
@@ -62,107 +62,10 @@
   <div class="video-grid" id="videoGrid"></div>
 </div>
 
-<!-- ===== ADMIN PAGE ===== -->
-<div id="adminPage" class="page">
-  <div class="admin-wrapper">
-    <div class="admin-header-bar">
-      <h2>⚙️ Admin Panel</h2>
-      <button class="action-btn btn-red" onclick="adminLogout()">🚪 Logout</button>
-    </div>
-    <div class="stats-grid" id="adminStats"></div>
-    <div class="admin-tabs">
-      <button class="admin-tab active" onclick="switchAdminTab('forms', this)">📋 Forms</button>
-      <button class="admin-tab" onclick="switchAdminTab('videos', this)">🎬 Videos</button>
-    </div>
-    <div id="adminForms" class="admin-content active">
-      <div class="admin-card">
-        <div class="admin-card-header">
-          <h4>All Forms</h4>
-          <button class="action-btn btn-primary" onclick="openAddForm()">➕ Add Form</button>
-        </div>
-        <div style="overflow-x:auto;">
-          <table class="admin-table" id="adminFormsTable">
-            <thead><tr><th>Form Name</th><th>Category</th><th>Status</th><th>Actions</th></tr></thead>
-            <tbody id="adminFormsTbody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <div id="adminVideos" class="admin-content">
-      <div class="admin-card">
-        <div class="admin-card-header">
-          <h4>Video Guides</h4>
-          <button class="action-btn btn-primary" onclick="openAddVideo()">➕ Add Video</button>
-        </div>
-        <div style="overflow-x:auto;">
-          <table class="admin-table" id="adminVideosTable">
-            <thead><tr><th>Title</th><th>Description</th><th>YouTube URL</th><th>Actions</th></tr></thead>
-            <tbody id="adminVideosTbody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- FOOTER -->
 <footer class="footer">
   <p>© 2025 <span>One Scan Help System</span> — Making Government &amp; Bank Forms Easy for Everyone</p>
 </footer>
-
-<!-- ===== LOGIN OVERLAY ===== -->
-<div class="login-overlay" id="loginOverlay">
-  <div class="login-box">
-    <div class="login-icon">🔐</div>
-    <h3>Admin Login</h3>
-    <p>Enter your credentials to manage content</p>
-    <div class="login-error" id="loginError">❌ Invalid username or password.</div>
-    <div class="form-group"><label>Username</label><input type="text" id="loginUser" placeholder="admin" /></div>
-    <div class="form-group"><label>Password</label><input type="password" id="loginPass" placeholder="••••••" onkeydown="if(event.key==='Enter') doLogin()" /></div>
-    <div style="display:flex;gap:10px;margin-top:6px;">
-      <button class="action-btn btn-primary" style="flex:1;justify-content:center;" onclick="doLogin()">Login</button>
-      <button class="action-btn btn-outline" style="flex:1;justify-content:center;" onclick="closeLogin()">Cancel</button>
-    </div>
-    <p style="margin-top:1rem;font-size:0.72rem;color:#94a3b8;">Default: admin / admin123</p>
-  </div>
-</div>
-
-<!-- ===== ADD/EDIT FORM MODAL ===== -->
-<div class="modal-overlay" id="formModal">
-  <div class="modal">
-    <div class="modal-header"><h3 id="formModalTitle">Add New Form</h3><button class="modal-close" onclick="closeModal('formModal')">✕</button></div>
-    <div class="modal-body">
-      <input type="hidden" id="editFormId">
-      <div class="form-group"><label>Form Name *</label><input type="text" id="fName" placeholder="e.g. PAN Card Application Form 49A" /></div>
-      <div class="form-group"><label>Category *</label><select id="fCategory"><option value="gov">🏛 Government</option><option value="bank">🏦 Bank</option><option value="health">🏥 Health</option><option value="id">🪪 Identity</option></select></div>
-      <div class="form-group"><label>Short Description *</label><input type="text" id="fDesc" placeholder="One line description of the form" /></div>
-      <div class="form-group"><label>Detailed Explanation</label><textarea id="fDetail" placeholder="Explain what this form is for..."></textarea></div>
-      <div class="form-group"><label>Form Download / Official Link</label><input type="url" id="fLink" placeholder="https://..." /></div>
-      <div class="form-group"><label>Related YouTube Video Link</label><input type="url" id="fVideo" placeholder="https://youtube.com/watch?v=..." /></div>
-    </div>
-    <div class="modal-footer">
-      <button class="action-btn btn-outline" onclick="closeModal('formModal')">Cancel</button>
-      <button class="action-btn btn-primary" onclick="saveForm()">💾 Save Form</button>
-    </div>
-  </div>
-</div>
-
-<!-- ===== ADD/EDIT VIDEO MODAL ===== -->
-<div class="modal-overlay" id="videoModal">
-  <div class="modal">
-    <div class="modal-header"><h3 id="videoModalTitle">Add Video Guide</h3><button class="modal-close" onclick="closeModal('videoModal')">✕</button></div>
-    <div class="modal-body">
-      <input type="hidden" id="editVideoId">
-      <div class="form-group"><label>Video Title *</label><input type="text" id="vTitle" placeholder="e.g. How to Apply for Aadhaar Card" /></div>
-      <div class="form-group"><label>Description</label><textarea id="vDesc" placeholder="Brief description..."></textarea></div>
-      <div class="form-group"><label>YouTube Video URL *</label><input type="url" id="vUrl" placeholder="https://www.youtube.com/watch?v=..." /></div>
-    </div>
-    <div class="modal-footer">
-      <button class="action-btn btn-outline" onclick="closeModal('videoModal')">Cancel</button>
-      <button class="action-btn btn-primary" onclick="saveVideo()">💾 Save Video</button>
-    </div>
-  </div>
-</div>
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
